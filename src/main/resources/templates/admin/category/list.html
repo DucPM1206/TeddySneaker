@@ -79,7 +79,7 @@
                                 <option value="1">Hiển thị</option>
                             </select>
                         </th>
-                        <th><input type="text" name="createAt" id="createAt" class="form-control search-input"></th>
+                        <th></th>
                         <th></th>
                         <th></th>
                         <input type="hidden" name="page" id="page">
@@ -201,20 +201,6 @@
 
             pagination([[${totalPages}]], [[${currentPage}]])
         });
-        // $(document).ready(function () {
-        //     $("#category_order").sortable({
-        //         placeholder: 'ui-state-highlight',
-        //         update: function (e, ui) {
-        //             let page_id_array = new Array();
-        //             $("#category_order tr").each(function () {
-        //                 page_id_array.push($(this).data("id"));
-        //             })
-        //             axios.put("/admin/api/categories", page_id_array).then(function (data) {
-        //                 toastr.success("Thay đổi thứ tự thành công!");
-        //             })
-        //         }
-        //     });
-        // });
 
         $("#formCategory").submit(function (e) {
             e.preventDefault();

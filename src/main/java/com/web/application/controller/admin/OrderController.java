@@ -45,7 +45,6 @@ public class OrderController {
 			@RequestParam(defaultValue = "", required = false) String phone,
 			@RequestParam(defaultValue = "", required = false) String status,
 			@RequestParam(defaultValue = "", required = false) String product,
-			@RequestParam(defaultValue = "", required = false) String createdAt,
 			@RequestParam(defaultValue = "1") Integer page) {
 
 		// Lấy danh sách sản phẩm
@@ -53,7 +52,7 @@ public class OrderController {
 		model.addAttribute("productList", productList);
 
 		// Lấy danh sách đơn hàng
-		Page<Order> orderPage = orderService.adminGetListOrders(id, name, phone, status, product, createdAt, page);
+		Page<Order> orderPage = orderService.adminGetListOrders(id, name, phone, status, product, page);
 		model.addAttribute("orderPage", orderPage.getContent());
 		model.addAttribute("totalPages", orderPage.getTotalPages());
 		model.addAttribute("currentPage", orderPage.getPageable().getPageNumber() + 1);

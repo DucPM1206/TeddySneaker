@@ -96,18 +96,7 @@
                                      th:data-id="${brand.id}"/>
                             </div>
                         </td>
-                        <th:block th:if="${brand.status} == true">
-                            <td><label class="switch" style="margin-left: 60px;">
-                                <input type="checkbox" checked disabled th:data-id="${brand.id}" class="brand-status">
-                                <span class="slider round"></span>
-                            </label></td>
-                        </th:block>
-                        <th:block th:if="${brand.status} == false">
-                            <td><label class="switch" style="margin-left: 60px;">
-                                <input type="checkbox" disabled th:data-id="${brand.id}" class="brand-status">
-                                <span class="slider round"></span>
-                            </label></td>
-                        </th:block>
+                        <td class="brand-status" th:text="${brand.status?'Hiện':'Ẩn'}"></td>
                         <td th:text="${#dates.format(brand.createdAt, 'dd-MM-yyyy HH:mm')}"></td>
                         <td th:text="${#dates.format(brand.modifiedAt, 'dd-MM-yyyy HH:mm')}"></td>
                         <td class="actions">

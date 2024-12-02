@@ -15,10 +15,10 @@ import java.util.List;
 public interface BrandRepository extends JpaRepository<Brand, Long> {
     Brand findByName(String name);
 
-    @Query(value = "SELECT * FROM brand b " +
-            "WHERE b.id LIKE CONCAT('%',?1,'%') " +
-            "OR b.name LIKE CONCAT('%',?2,'%') " +
-            "OR b.status LIKE CONCAT('%',?3,'%')", nativeQuery = true)
+    @Query(value = "SELECT * FROM brand " +
+            "WHERE id LIKE CONCAT('%',?1,'%') " +
+            "AND name LIKE CONCAT('%',?2,'%') " +
+            "AND status LIKE CONCAT('%',?3,'%')", nativeQuery = true)
     Page<Brand> adminGetListBrands(String id, String name, String status, Pageable pageable);
 
     @Query(name = "getProductOrderBrands",nativeQuery = true)
