@@ -59,7 +59,7 @@ public class OrderServiceImpl implements OrderService {
 			page = 0;
 		}
 		int limit = 10;
-		Pageable pageable = PageRequest.of(page, limit, Sort.by("id").ascending());
+		Pageable pageable = PageRequest.of(page, limit, Sort.by("id").descending());
 		return orderRepository.adminGetListOrder(id, name, phone, status, product, createdAt, pageable);
 	}
 
@@ -306,25 +306,6 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public void userCancelOrder(long id, long userId) {
-		Optional<Order> rs = orderRepository.findById(id);
-		if (rs.isEmpty()) {
-			throw new NotFoundExp("Đơn hàng không tồn tại");
-		}
-		Order order = rs.get();
-		if (order.getBuyer().getId() != userId) {
-			throw new BadRequestExp("Bạn không phải chủ nhân đơn hàng");
-		}
-		if (order.getStatus() != Contant.ORDER_STATUS) {
-			throw new BadRequestExp(
-					"Trạng thái đơn hàng không phù hợp để hủy. Vui lòng liên hệ với shop để được hỗ trợ");
-		}
-
-		order.setStatus(Contant.CANCELED_STATUS);
-		orderRepository.save(order);
-	}
-
-	@Override
 	public long getCountOrder() {
 		return orderRepository.count();
 	}
@@ -357,6 +338,25 @@ public class OrderServiceImpl implements OrderService {
 			statistic.setProfit(statistic.getSales() - (statistic.getQuantity() * order.getProduct().getPrice()));
 			statisticRepository.save(statistic);
 		}
+	}
+
+	@Override
+	public void userCancelOrder(long id, long userId, UpdateStatusOrderRequest updateStatusOrderRequest) {
+		Optional<Order> rs = orderRepository.findById(id);
+		if (rs.isEmpty()) {
+			throw new NotFoundExp("Đơn hàng không tồn tại");
+		}
+		Order order = rs.get();
+		if (order.getBuyer().getId() != userId) {
+			throw new BadRequestExp("Bạn không phải chủ nhân đơn hàng");
+		}
+		if (order.getStatus() != Contant.ORDER_STATUS) {
+			throw new BadRequestExp(
+					"Trạng thái đơn hàng không phù hợp để hủy. Vui lòng liên hệ với shop để được hỗ trợ");
+		}
+		order.setNote(updateStatusOrderRequest.getNote());
+		order.setStatus(Contant.CANCELED_STATUS);
+		orderRepository.save(order);
 	}
 
 	@Override

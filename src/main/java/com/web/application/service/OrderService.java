@@ -29,7 +29,7 @@ public interface OrderService {
 
 	OrderDetailDTO userGetDetailById(long id, long userId);
 
-	void userCancelOrder(long id, long userId);
+	void userCancelOrder(long id, long userId, UpdateStatusOrderRequest updateStatusOrderRequest);
 
 	void userReturnOrder(long id, long userId, UpdateStatusOrderRequest updateStatusOrderRequest);
 

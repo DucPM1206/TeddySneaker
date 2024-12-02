@@ -191,7 +191,7 @@ public class OrderController {
 
 	@PostMapping("/api/return-order/{id}")
 	public ResponseEntity<Object> returnOrder(@PathVariable long id,
-			@Valid @RequestBody UpdateStatusOrderRequest updateStatusOrderRequest) {
+											  @Valid @RequestBody UpdateStatusOrderRequest updateStatusOrderRequest) {
 		User user = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
 				.getUser();
 
@@ -201,11 +201,12 @@ public class OrderController {
 	}
 
 	@PostMapping("/api/cancel-order/{id}")
-	public ResponseEntity<Object> cancelOrder(@PathVariable long id) {
+	public ResponseEntity<Object> cancelOrder(@PathVariable long id,
+											  @Valid @RequestBody UpdateStatusOrderRequest updateStatusOrderRequest) {
 		User user = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
 				.getUser();
 
-		orderService.userCancelOrder(id, user.getId());
+		orderService.userCancelOrder(id, user.getId(), updateStatusOrderRequest);
 
 		return ResponseEntity.ok("Hủy đơn hàng thành công");
 	}

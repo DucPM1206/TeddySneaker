@@ -31,8 +31,6 @@ public class Contant {
 
     //Size giày
     public static final List<Integer> SIZE_VN = new ArrayList<>(Arrays.asList(35, 36, 37, 38, 39, 40, 41, 42, 43));
-//    public static final double[] SIZE_US = {2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5, 9.5};
-//    public static final double[] SIZE_CM = {21.3, 22.2, 23, 23.8, 24.6, 25.4, 26.2, 27.1};
 
     //Trạng thái post
     public static final int PUBLIC_POST = 1;
