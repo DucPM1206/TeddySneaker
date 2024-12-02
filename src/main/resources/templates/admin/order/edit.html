@@ -190,12 +190,12 @@
                                     <div class="col-md-4">
                                         <div class="edit-order-div">
                                             <label>Trạng thái đơn hàng</label>
-                                            <select name="status" class="form-control thuy-search-select" id="status">
+                                            <select name="status" onchange="checkStatus(this)" class="form-control thuy-search-select" id="status">
                                                 <option value="1" th:selected="${order.status} == 1">Chờ lấy hàng</option>
                                                 <option value="2" th:selected="${order.status} == 2">Đang giao hàng</option>
                                                 <option value="3" th:selected="${order.status} == 3">Đã giao hàng</option>
                                                 <option value="4" th:selected="${order.status} == 4" disabled>Đơn hàng bị trả lại</option>
-                                                <option value="5" th:selected="${order.status} == 5">Đơn hàng bị hủy</option>
+                                                <option value="5" id="cancel" th:selected="${order.status} == 5">Đơn hàng bị hủy</option>
                                             </select>
                                             <br>
                                             <label>Ghi chú</label>
@@ -346,11 +346,68 @@
             </div>
         </div>
     </th:block>
-
+    <div class="modal fade" id="cancelProduct" tabindex="-1"
+         data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="changePasswordLabel">Bạn có chắc chắn muốn huỷ đơn hàng không?</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="new-password-confirm item-row">
+                        <div class="text required-label">Lý do hủy đơn</div>
+                        <div class="password-wrapper-in">
+                            <input class="form-control" type="text" id="note-huy" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-huy" type="button" data-dismiss="modal">Huỷ
+                        bỏ</button>
+                    <button class="btn btn-primary red-btn btn-confirm-return-product"
+                            th:data-order="${order.id}" type="button">Đồng ý</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
 <th:block id="js-resources">
     <script th:inline="javascript">
+        let initialStatus = $("#status").val();
+        if(initialStatus === "3"){
+            $("#cancel").prop("disabled", true);
+        }
+        function checkStatus(selectElement) {
+            if (selectElement.value === "5") {
+                $("#cancelProduct").modal("show");
+            }
+        }
+
+        $('.btn-confirm-return-product').click(function() {
+            let isValid = true;
+            let noteValue = $("#note-huy").val();
+            if (noteValue.trim().isEmpty) {
+                noteInvalid = $("#note-huy").next();
+                noteInvalid.css('display', 'block');
+                noteInvalid.html('Vui lòng nhập lý do');
+                isValid = false;
+            }else {
+                $("#note").next().css("display", "none");
+            }
+
+            if (isValid) {
+                $("#note").val(noteValue);
+                $("#cancelProduct").modal("hide");
+            }
+
+        })
+        $('.btn-huy').click(function() {
+            $("#status").val(initialStatus);
+            $("#cancelProduct").modal("hide"); // Đóng modal
+        })
+        
         var status = [[${order.status}]]
         if (status == 1) {
             let products = [[${products}]]
