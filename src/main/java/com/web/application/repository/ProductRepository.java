@@ -29,8 +29,11 @@ public interface ProductRepository extends JpaRepository<Product, String> {
             "WHERE p.id LIKE CONCAT('%',?1,'%') " +
             "AND p.name LIKE CONCAT('%',?2,'%') " +
             "AND c.id LIKE CONCAT('%',?3,'%') " +
-            "AND p.brand_id LIKE CONCAT('%',?4,'%')) as tb1 on pro.id=tb1.id", nativeQuery = true)
-    Page<Product> adminGetListProducts(String id, String name, String category, String brand, Pageable pageable);
+            "AND p.brand_id LIKE CONCAT('%',?4,'%') " +
+            "AND p.price LIKE CONCAT('%',?5,'%') " +
+            "AND p.sale_price LIKE CONCAT('%',?6,'%')) as tb1 on pro.id=tb1.id"
+            , nativeQuery = true)
+    Page<Product> adminGetListProducts(String id, String name, String category, String brand, Long price, Long sale_price, Pageable pageable);
 
 //    @Query(value = "SELECT NEW dto.model.com.nhutkhuong1.application.ProductInfoDTO(p.id, p.name, p.slug, p.price ,p.images ->> '$[0]', p.total_sold) " +
 //            "FROM product p " +

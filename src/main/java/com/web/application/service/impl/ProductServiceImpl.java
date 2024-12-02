@@ -56,13 +56,13 @@ public class ProductServiceImpl implements ProductService {
     private OrderRepository orderRepository;
 
     @Override
-    public Page<Product> adminGetListProduct(String id, String name, String category, String brand, Integer page) {
+    public Page<Product> adminGetListProduct(String id, String name, String category, String brand, Long price, Long sale_price, Integer page) {
         page--;
         if (page < 0) {
             page = 0;
         }
-        Pageable pageable = PageRequest.of(page, Contant.LIMIT_PRODUCT, Sort.by("created_at").descending());
-        return productRepository.adminGetListProducts(id, name, category, brand, pageable);
+        Pageable pageable = PageRequest.of(page, Contant.LIMIT_PRODUCT, Sort.by("id").descending());
+        return productRepository.adminGetListProducts(id, name, category, brand, price, sale_price, pageable);
     }
 
     @Override

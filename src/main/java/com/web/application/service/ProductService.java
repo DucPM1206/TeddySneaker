@@ -21,7 +21,7 @@ import java.util.List;
 public interface ProductService {
 
     //Lấy sản phẩm
-    Page<Product> adminGetListProduct(String id, String name, String category, String brand, Integer page);
+    Page<Product> adminGetListProduct(String id, String name, String category, String brand, Long price, Long sale_price, Integer page);
 
     //Tạo sản phẩm
     Product createProduct(CreateProductRequest createProductRequest);

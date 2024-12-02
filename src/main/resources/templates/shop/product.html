@@ -275,7 +275,11 @@
                 toastr.warning("Khoảng giá không hợp lệ");
                 return;
             }
-            if (minPrice > 999999999999 || maxPrice > 999999999999) {
+            if (minPrice < 0 || maxPrice < 0) {
+                toastr.warning("Khoảng giá không hợp lệ");
+                return;
+            }
+            if (minPrice > 1000000000 || maxPrice > 1000000000) {
                 toastr.warning("Khoảng giá quá lớn");
                 return;
             }

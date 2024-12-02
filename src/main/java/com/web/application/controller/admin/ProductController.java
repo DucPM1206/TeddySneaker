@@ -83,6 +83,8 @@ public class ProductController {
                             @RequestParam(defaultValue = "", required = false) String name,
                             @RequestParam(defaultValue = "", required = false) String category,
                             @RequestParam(defaultValue = "", required = false) String brand,
+                            @RequestParam(defaultValue = "", required = false) Long price,
+                            @RequestParam(defaultValue = "", required = false) Long sale_price,
                             @RequestParam(defaultValue = "1", required = false) Integer page) {
 
         //Lấy danh sách nhãn hiệu
@@ -92,7 +94,7 @@ public class ProductController {
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
         //Lấy danh sách sản phẩm
-        Page<Product> products = productService.adminGetListProduct(id, name, category, brand, page);
+        Page<Product> products = productService.adminGetListProduct(id, name, category, brand, price, sale_price, page);
         model.addAttribute("products", products.getContent());
         model.addAttribute("totalPages", products.getTotalPages());
         model.addAttribute("currentPage", products.getPageable().getPageNumber() + 1);
@@ -152,8 +154,10 @@ public class ProductController {
                                                   @RequestParam(defaultValue = "", required = false) String name,
                                                   @RequestParam(defaultValue = "", required = false) String category,
                                                   @RequestParam(defaultValue = "", required = false) String brand,
+                                                  @RequestParam(defaultValue = "", required = false) Long price,
+                                                  @RequestParam(defaultValue = "", required = false) Long sale_price,
                                                   @RequestParam(defaultValue = "1", required = false) Integer page) {
-        Page<Product> products = productService.adminGetListProduct(id, name, category, brand, page);
+        Page<Product> products = productService.adminGetListProduct(id, name, category, brand, price, sale_price, page);
         return ResponseEntity.ok(products);
     }
 

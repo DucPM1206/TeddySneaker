@@ -95,8 +95,10 @@
                                 </th:block>
                             </select>
                         </th>
-                        <th></th>
-                        <th></th>
+                        <th>
+                            <input type="text" name="price" id="price" class="form-control search-input">
+                        </th>
+                        <th><input type="text" name="sale_price" id="sale_price" class="form-control search-input"></th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -146,7 +148,7 @@
     <script type="text/javascript" th:src="@{/adminlte/pagination/jquery.simplePagination.js}"></script>
     <script type="text/javascript" th:src="@{/adminlte/js/table.js}"></script>
     <script th:inline="javascript">
-        let id, name, category, brand, page;
+        let id, name, category, brand, price, sale_price, page;
         $(function () {
             $("#checkAll").click(function () {
                 $('input:checkbox').not(this).prop('checked', this.checked);
@@ -163,12 +165,39 @@
             name = vars["name"] || ""
             brand = vars["brand"] || ""
             category = vars["category"] || ""
+            price = vars["price"] || ""
+            sale_price = vars["sale_price"] || ""
             page = vars["page"] || "1"
+
+            //Validate
+            if(id.length > 255) {
+                alert("Chỉ được nhập tối đa 255 ký tự");
+                location.replace("http://localhost:8080/admin/products");
+            }
+            if(name.length > 255) {
+                alert("Chỉ được nhập tối đa 255 ký tự");
+                location.replace("http://localhost:8080/admin/products");
+            }
+            if(price.length > 255) {
+                alert("Chỉ được nhập tối đa 255 ký tự");
+                location.replace("http://localhost:8080/admin/products");
+            }
+            if(/[a-zA-Z]/.test(price)) {
+                alert("Số tiền nhập vào không hợp lệ");
+                location.replace("http://localhost:8080/admin/products");
+            }
+            if(page.length > 255) {
+                alert("Chỉ được nhập tối đa 255 ký tự");
+                location.replace("http://localhost:8080/admin/products");
+            }
+
             $('#page').val(page)
             $('#id').val(id)
             $('#name').val(name)
             $('#brand').val(brand)
             $('#category').val(category)
+            $('#price').val(price)
+            $('#sale_price').val(sale_price)
 
             pagination([[${totalPages}]], [[${currentPage}]]);
         });

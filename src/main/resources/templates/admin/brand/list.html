@@ -283,38 +283,45 @@
             }
             isValid = true;
 
-            if (newBrand.length === 0) {
-                $('#invalid-feedback-new-brand').show();
-                isValid = false;
-            }
-            if (typeof thumbnail == 'undefined' || thumbnail == '') {
-                $('.invalid-feedback-thumbnail').show();
-                isValid = false;
-            }
+			// Kiểm tra độ dài của tên nhãn hiệu
+			if (newBrand.length === 0 || newBrand.length > 50) {
+				$('#invalid-feedback-new-brand').text('Độ dài tên nhãn hiệu phải từ 1 - 50 ký tự');
+				$('#invalid-feedback-new-brand').show();
+				isValid = false;
+			} else {
+				$('#invalid-feedback-new-brand').hide();
+			}
 
-            if (isValid) {
-                req = {
-                    name: newBrand,
-                    thumbnail: thumbnail,
-                    status: status
-                }
-                var myJSON = JSON.stringify(req);
-                $.ajax({
-                    url: '/api/admin/brands',
-                    type: 'POST',
-                    data: myJSON,
-                    contentType: "application/json; charset=utf-8",
-                    success: function (data) {
-                        toastr.success("Tạo nhãn hiệu thành công");
-                        $('.modal').modal('hide');
-                        setTimeout(() => location.reload(), 500);
-                    },
-                    error: function (data) {
-                        toastr.warning(data.responseJSON.message);
-                    }
-                });
-            }
-        });
+			if (typeof thumbnail === 'undefined' || thumbnail === '') {
+				$('.invalid-feedback-thumbnail').show();
+				isValid = false;
+			} else {
+				$('.invalid-feedback-thumbnail').hide();
+			}
+
+			if (isValid) {
+				const req = {
+					name: newBrand,
+					thumbnail: thumbnail,
+					status: status
+				};
+				const myJSON = JSON.stringify(req);
+				$.ajax({
+					url: '/api/admin/brands',
+					type: 'POST',
+					data: myJSON,
+					contentType: "application/json; charset=utf-8",
+					success: function (data) {
+						toastr.success("Tạo nhãn hiệu thành công");
+						$('.modal').modal('hide');
+						setTimeout(() => location.reload(), 500);
+					},
+					error: function (data) {
+						toastr.warning(data.responseJSON.message);
+					}
+				});
+			}
+		});
 
         let brandId;
         $('.edit-brand').click(function () {
