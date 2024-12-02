@@ -78,8 +78,10 @@
 								</select></th>
 								<th><input type="text" name="phone" id="phone"
 									class="form-control search-input"></th>
+								<th><input type="text" name="address" id="address"
+										   class="form-control search-input"></th>
 								<th></th>
-								<th></th> <input type="hidden" name="page" id="page">
+								<input type="hidden" name="page" id="page">
 							</form>
 						</tr>
 					</thead>
@@ -122,6 +124,27 @@
             phone = vars["phone"] || ""
             address = vars["address"] || ""
             page = vars["page"] || "1"
+
+			if(fullName.length > 255) {
+				alert("Chỉ được nhập tối đa 255 ký tự");
+				location.replace("http://localhost:8080/admin/users");
+			}
+			if(email.length > 255) {
+				alert("Chỉ được nhập tối đa 255 ký tự");
+				location.replace("http://localhost:8080/admin/users");
+			}
+			if(phone.length > 255) {
+				alert("Chỉ được nhập tối đa 255 ký tự");
+				location.replace("http://localhost:8080/admin/users");
+			}
+			if(/[a-zA-Z]/.test(phone)) {
+				alert("Số điên thoại nhập vào không hợp lệ");
+				location.replace("http://localhost:8080/admin/users");
+			}
+			if(address.length > 255) {
+				alert("Chỉ được nhập tối đa 255 ký tự");
+				location.replace("http://localhost:8080/admin/users");
+			}
 				
             $('#fullName').val(fullName)
             $('#email').val(email)

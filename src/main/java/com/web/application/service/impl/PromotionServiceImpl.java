@@ -117,6 +117,10 @@ public class PromotionServiceImpl implements PromotionService {
 		}
 
 		// check validate
+		Timestamp now = new Timestamp(System.currentTimeMillis());
+		if (createPromotionRequest.getExpiredDate().before(now)) {
+			throw new BadRequestExp("Hạn khuyến mại không hợp lệ");
+		}
 		if (createPromotionRequest.getDiscountType() == Contant.DISCOUNT_PERCENT) {
 			if (createPromotionRequest.getDiscountValue() < 1 || createPromotionRequest.getDiscountValue() > 100) {
 				throw new BadRequestExp("Mức giảm giá từ 1 - 100%");
